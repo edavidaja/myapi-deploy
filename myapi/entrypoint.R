@@ -12,7 +12,7 @@ pool <- dbPool(
 DBI::dbWriteTable(pool, "my_data", iris, overwrite = TRUE)
 
 plumber::plumb_api("myapi", "data") |>
+  pr_set_debug(TRUE) |>
   plumber::pr_hook("exit", function(){
     poolClose(pool)
-  }) |>
-  plumber::pr_run()
+  })
