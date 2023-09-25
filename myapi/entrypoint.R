@@ -6,12 +6,10 @@ library(duckdb)
 
 pool <- dbPool(
   duckdb::duckdb(),
-  dbdir = ":memory:",
-  minSize = 1,
-  idleTimeout = 600000
+  dbdir = ":memory:"
 )
 
-dbWriteTable(pool, "my_data", iris, overwrite = TRUE)
+DBI::dbWriteTable(pool, "my_data", iris, overwrite = TRUE)
 
 plumber::plumb_api("myapi", "data") |>
   plumber::pr_hook("exit", function(){
